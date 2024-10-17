@@ -43,8 +43,8 @@ jobs:
 
       - name: Execute
         working-directory: ./
-        run: docker run -d -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
+        run: docker run -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
 
       - name: Healthcheck
         working-directory: ./
-        run: curl -I http://localhost:3000
+        run: curl -I http://localhost:${{ vars.PORT }}
