@@ -41,8 +41,10 @@ jobs:
         working-directory: ./
         run: docker build -t healthcheck . --build-arg PORT=${{ vars.PORT }} --build-arg GITHUB_SHA=${{ github.sha }}
 
+      - name: Execute
+        working-directory: ./
+        run: docker run -d -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
+
       - name: Healthcheck
         working-directory: ./
-        run: |
-          docker run -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
-          curl http://localhost:3000/healthcheck
+        run: curl http://localhost:3000/healthcheck
