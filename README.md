@@ -9,7 +9,7 @@ and the last commit SHA. It is designed to be lightweight and easy to deploy.
 - **Health Check API:** Returns application version, descriptionand last commit SHA.
 - **Docker Support:** The application is fully containerized for easy deployment.
 - **CI Pipeline:** GitHub Actions is used for automated testing, linting, and Docker
-image building.
+  image building.
 
 ---
 
@@ -27,11 +27,11 @@ Once can run the application locally by following steps defined below:
 
 - Clone the repository
 
-   ```sh
-   git clone https://github.com/abhi-markan/healthcheck.git
+  ```sh
+  git clone https://github.com/abhi-markan/healthcheck.git
 
-   cd healthcheck
-   ```
+  cd healthcheck
+  ```
 
 - Specify environment variable
 
@@ -62,7 +62,7 @@ docker build -t healthcheck . \
 - Run the image
 
 ```sh
-docker run healthcheck
+docker run -p 3000:3000 healthcheck
 ```
 
 One can also runt the app locally without docker build
@@ -100,17 +100,17 @@ Once should expect to receive following response body when executing locally
 ## Known risks
 
 - **Dependencies** : Since the application uses third-party packages like Express,
-vulnerabilities in those packages can affect the application. To mitigate this,
-tools like npm audit can help identify and fix potential vulnerabilities in dependencies.
+  vulnerabilities in those packages can affect the application. To mitigate this,
+  tools like npm audit can help identify and fix potential vulnerabilities in dependencies.
 
 - **Lack of authentication**: If the /healthcheck endpoint is exposed to the public,
-it could potentially reveal sensitive information such as application version or
-commit hashes, which could be leveraged in attacks. Restrict access to this endpoint,
-especially in production environments. API key header or authorisation header is
-recommended.
+  it could potentially reveal sensitive information such as application version or
+  commit hashes, which could be leveraged in attacks. Restrict access to this endpoint,
+  especially in production environments. API key header or authorisation header is
+  recommended.
 
 - **DDoS**: The app currently does not implement any rate limiting neither at infrastructure
-nor at application level.
+  nor at application level.
 
 - **CSP**: The application does not implement any CSP headers.
 
@@ -119,15 +119,15 @@ nor at application level.
 - **CSRF**: The application does not implement any CSRF mitigation strategies.
 
 - **Load balancing**: No load balancing has been configured as the application
-is executed on a single Express instance.
+  is executed on a single Express instance.
 
 - **Monitoring**: The application does not implement any monitoring, logging
-and altering strategies.
+  and altering strategies.
 
 - **Deployment authorisation**: Although not in scope the application does not
-cover any deployment service principals.
+  cover any deployment service principals.
 
 - **Misconfigured CI**: The pipeline does not prevent deployment if a test fails.
 
 - **Docker build**: Docker build is currently not multi-stage build which can allow
-execution of vulnerable scripts in a final built image.
+  execution of vulnerable scripts in a final built image.
