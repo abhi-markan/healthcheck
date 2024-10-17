@@ -45,4 +45,4 @@ jobs:
         working-directory: ./
         run: | 
           docker run -d -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
-          curl http://localhost:3000/healthcheck
+          curl -I http://localhost:3000/healthcheck
