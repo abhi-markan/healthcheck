@@ -1,0 +1,74 @@
+name: QAT
+run-name: ✅ Quality assurance testing on ${{ github.event.number }}
+
+on:
+  pull_request:
+    branches:
+      - main
+
+    paths:
+      - '*'
+
+env:
+  environment: qa
+  TZ: ${{ vars.TIMEZONE }}
+  PORT: ${{ vars.PORT }}
+  NODE_ENV: ${{ vars.NODE_ENV }}
+  RATE_LIMIT_THRESHOLD: ${{ secrets.RATE_LIMIT_THRESHOLD }}
+
+jobs:
+  # 1. Setup test infrastructure
+  setup:
+    name: Infrastructure setup 🔧
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ env.environment }}
+      TZ: ${{ env.TZ }}
+    steps:
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.environment }}"
+
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.TZ }}"
+
+  # 2. Unit tests
+  unit-tests:
+    name: Unit 👷
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.services }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.TZ }}
+
+      - name: Repository
+        uses: actions/checkout@v4
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci
+
+      - name: Execute
+        working-directory: ./
+        run: npm run unit-test
+
+      # Optional: Upload test coverage
+      # - name: Coverage
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     flags: unit-test
+      #     verbose: true

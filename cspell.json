@@ -1,0 +1,53 @@
+{
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/**",
+    "**/coverage/**",
+    ".vscode",
+    ".gitignore",
+    "package-lock.json",
+    "package.json",
+    "report",
+    "dist/**",
+    "**/public/**",
+    "**/webpack.common.**",
+    ".gitignore",
+    "**/Dockerfile",
+    "**.doc*",
+    "**.xls*",
+    "**.csv",
+    "**.css",
+    "**.scss",
+    "CHANGELOG.md"
+  ],
+  "language": "en",
+  "noConfigSearch": true,
+  "allowCompoundWords": true,
+  "words": [
+    "codecov",
+    "Midllewares",
+    "myapplication",
+    "szenius"
+  ],
+  "dictionaries": [
+    "en-gb",
+    "companies",
+    "softwareTerms",
+    "misc",
+    "lorem-ipsum",
+    "typescript",
+    "node",
+    "bash",
+    "npm"
+  ],
+  "languageSettings": [
+    {
+      "languageId": "commit-msg",
+      "ignoreRegExpList": [
+        "/^#.*/gm"
+      ]
+    }
+  ],
+  "version": "0.2"
+}

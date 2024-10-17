@@ -1,0 +1,33 @@
+# Git Hub Actions
+#####################################
+# Automatic monthly dependencies updates
+# for the following services:
+# 1. NPM
+# 2. Docker
+# 3. GHA
+
+version: 2
+updates:
+  # NPM
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    labels:
+      - 'chore'
+
+  # Dockerfile
+  - package-ecosystem: 'docker'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    labels:
+      - 'chore'
+
+  # Git Hub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    labels:
+      - 'chore'
