@@ -31,7 +31,7 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Repository
@@ -44,6 +44,9 @@ jobs:
       - name: Execute
         working-directory: ./
         run: docker run -d -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
+
+      - name: Wait
+        run: sleep 120s
 
       - name: Healthcheck
         working-directory: ./
