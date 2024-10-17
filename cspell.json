@@ -25,6 +25,7 @@
   "noConfigSearch": true,
   "allowCompoundWords": true,
   "words": [
+    "Codacy",
     "codecov",
     "Midllewares",
     "myapplication",
