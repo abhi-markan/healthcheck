@@ -54,7 +54,9 @@ RATE_LIMIT_THRESHOLD=300
 - Build the image
 
 ```sh
-docker build -t healthcheck .
+docker build -t healthcheck . \
+--build-arg PORT=3000 \
+--build-arg GITHUB_SHA=sha5123
 ```
 
 - Run the image
@@ -73,6 +75,26 @@ npm run start
 
 ```sh
 npm run unit-test
+```
+
+- Invoke the endpoint
+
+```sh
+curl http://localhost:3000/healthcheck
+```
+
+Once should expect to receive following response body when executing locally
+
+```javascript
+{
+    "myapplication": [
+        {
+            "version": "1.0.0",
+            "description": "pre-interview technical test",
+            "lastcommitsha": "sha5123"
+        }
+    ]
+}
 ```
 
 ## Known risks
