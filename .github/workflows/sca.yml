@@ -8,7 +8,7 @@ on:
 
 env:
   environment: qa
-  timezone: ${{ vars.TIMEZONE }}
+  timezone: ${{ vars.TZ}}
 
 jobs:
   # 1. Setup test infrastructure
@@ -61,3 +61,23 @@ jobs:
       - name: Spell check
         working-directory: ./
         run: npm run spellcheck
+
+  # 4. NPM - Audit
+  audit:
+    name: Audit 🔎
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository
+        uses: actions/checkout@v4
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci
+
+      - name: Audit
+        working-directory: ./
+        run: npm audit

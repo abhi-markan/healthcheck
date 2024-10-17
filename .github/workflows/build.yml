@@ -1,0 +1,53 @@
+name: Build
+run-name: 🏗️ Application build ${{ github.event.number }}
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  environment: qa
+  timezone: ${{ vars.TZ}}
+
+jobs:
+  # 1. Setup test infrastructure
+  setup:
+    name: Infrastructure setup 🔧
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ env.environment }}
+      timezone: ${{ env.timezone }}
+    steps:
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.environment }}"
+
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.timezone }}"
+
+  # 2. Build application
+  build:
+    name: Build 🛠️
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository
+        uses: actions/checkout@v4
+
+      - name: Artifact
+        working-directory: ./
+        run: docker build -t healthcheck . --build-arg PORT=${{ vars.PORT }} --build-arg GITHUB_SHA=${{ github.sha }}
+
+      - name: Execute
+        working-directory: ./
+        run: docker run -d -p ${{ vars.PORT }}:${{ vars.PORT }} healthcheck
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Healthcheck
+        working-directory: ./
+        run: echo | curl http://localhost:${{ vars.PORT }}/healthcheck

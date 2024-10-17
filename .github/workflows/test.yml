@@ -6,12 +6,9 @@ on:
     branches:
       - main
 
-    paths:
-      - '*'
-
 env:
   environment: qa
-  TZ: ${{ vars.TIMEZONE }}
+  TZ: ${{ vars.TZ}}
   PORT: ${{ vars.PORT }}
   NODE_ENV: ${{ vars.NODE_ENV }}
   RATE_LIMIT_THRESHOLD: ${{ secrets.RATE_LIMIT_THRESHOLD }}

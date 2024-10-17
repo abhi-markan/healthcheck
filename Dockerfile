@@ -21,5 +21,15 @@ RUN npm cache clean --force
 # Expose listening port
 EXPOSE ${PORT}
 
+# Container healthcheck
+HEALTHCHECK \
+--interval=60s \
+--timeout=30s \
+CMD wget \
+--no-verbose \
+--tries=3 \
+--spider http://localhost:${PORT}/healthcheck \
+|| exit 1
+
 # Execute Script
 CMD ["npm", "run", "start"]
