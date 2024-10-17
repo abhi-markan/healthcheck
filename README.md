@@ -106,3 +106,6 @@ and altering strategies.
 cover any deployment service principals.
 
 - **Misconfigured CI**: The pipeline does not prevent deployment if a test fails.
+
+- **Docker build**: Docker build is currently not multi-stage build which can allow
+execution of vulnerable scripts in a final built image.
