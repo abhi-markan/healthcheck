@@ -48,5 +48,5 @@ jobs:
       - name: Healthcheck
         working-directory: ./
         run: | 
-          wget -I http://localhost:${{ vars.PORT }}
+          wget http://localhost:${{ vars.PORT }}
           cat healthcheck
